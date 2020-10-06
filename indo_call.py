@@ -11,9 +11,14 @@ os.system('clear')
 
 class IndoCall:
     def __init__(self):
-        self.ua = requests.get('https://pastebin.com/raw/zkCXTGcm').text.split(
-            '\n')
-        self.rand_ua = random.choice(self.ua).strip()
+        req = requests.get('https://pastebin.com/raw/zkCXTGcm')
+        if not req.ok:
+            self.ua_list = req.text.split('\n')
+        else:
+            with open('ua_hardcopy', 'r') as ua_file:
+                self.ua_list = ua_file.readlines()
+
+        self.ua = random.choice(self.ua_list).strip()
         self.code = input('\033[00mCountry Code: \033[96m')
         self.number = input('\033[00mPhone Number: \033[96m')
         self.gb = self.code + self.number
@@ -27,7 +32,7 @@ class IndoCall:
             'Host': 'srv3.sampingan.co.id',
             'Connection': 'Keep-Alive',
             'Accept-Encoding': 'gzip',
-            'User-Agent': '{}'.format(self.rand_ua)
+            'User-Agent': '{}'.format(self.ua)
         }
         self.dat1 = json.dumps({
             "countryCode": self.code,
@@ -51,7 +56,7 @@ class IndoCall:
             'origin': 'https://www.citcall.com',
             'upgrade-insecure-requests': '1',
             'content-type': 'application/x-www-form-urlencoded',
-            'user-agent': '{}'.format(self.rand_ua),
+            'user-agent': '{}'.format(self.ua),
             'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,'
                       'image/webp,image/apng,*/*;q=0.8,'
                       'application/signed-exchange;v=b3;q=0.9',
@@ -77,7 +82,7 @@ class IndoCall:
             'Connection': 'keep-alive',
             'Accept': '*/*',
             'X-Requested-With': 'XMLHttpRequest',
-            'User-Agent': '{}'.format(self.rand_ua),
+            'User-Agent': '{}'.format(self.ua),
             'Referer': 'https://id.jagreward.com/member/register/',
             'Accept-Language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
             'Cookie': 'PHPSESSID={}'.format(r)
