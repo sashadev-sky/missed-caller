@@ -12,7 +12,7 @@ os.system('clear')
 class IndoCall:
     def __init__(self):
         req = requests.get('https://pastebin.com/raw/zkCXTGcm')
-        if not req.ok:
+        if req.ok:
             self.ua_list = req.text.split('\n')
         else:
             with open('ua_hardcopy', 'r') as ua_file:
