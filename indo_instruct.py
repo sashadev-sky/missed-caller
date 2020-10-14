@@ -10,5 +10,4 @@ def instructions(s):
 
 
 instructions('''\033[91m[!]\033[00mScript Spam Call
-Python 2 and Python 3 compatible
 Run: python3 indo_call.py''')
